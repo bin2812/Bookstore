@@ -12,6 +12,8 @@ import Home from "./components/WebBook/Home";
 import Shop from "./components/WebBook/Shop";
 import Support from "./components/WebBook/Support";
 import Cart from "./components/WebBook/Cart";
+import Login from "./components/WebBook/Login";
+import Register from "./components/WebBook/Register";
 // import { Person } from "./components/Person";
 // import { Profile } from "./components/Profile";
 // import { Calculator } from "./components/Calculator";
@@ -28,6 +30,8 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <Support />
     </>
