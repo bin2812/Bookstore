@@ -5,7 +5,7 @@ const Login = () => {
     <div className=" flex h-screen">
       <div className="w-1/2 flex justify-center pl-[5%] pr-[5%] flex-col ">
         <h2 className="text-3xl font-bold text-[#e04943] ">
-          Sign Up - Explore a World of Books Just for You!
+          Login to Unlock Possibilities!
         </h2>
         <p>Welcome back! Please login to your account.</p>
         <form className="flex flex-col">
