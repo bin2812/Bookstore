@@ -19,9 +19,18 @@ import Register from "./components/WebBook/Register";
 // import { Calculator } from "./components/Calculator";
 // react thực hiện render theo dạng tree, gốc, nhánh
 // Nếu như có từ 2 component trở lên thì cần phải bọc trong 1 thẻ div, <></>
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#e04943",
+    },
+  },
+});
 function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -34,7 +43,7 @@ function App() {
         <Route path="/register" element={<Register />} />
       </Routes>
       <Support />
-    </>
+    </ThemeProvider>
   );
 }
 
