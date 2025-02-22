@@ -1,9 +1,42 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { useCartStore } from "../../stores/cart.store";
+import { userCounter } from "../../stores/user.store";
+import { toast } from "react-toastify";
 
 const ResultFilterBook = (props) => {
   const { bookList } = props;
   const navigate = useNavigate();
+  const { user } = userCounter();
+  const { addItem } = useCartStore();
+
+  const handleAddToCart = async (book) => {
+    if (!user) {
+      toast.error("Please login to add items to cart", {
+        position: "top-center",
+      });
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await addItem(user.uid, {
+        id: book.id,
+        title: book.title,
+        price: book.price,
+        image: book.imgUrl,
+      });
+      toast.success("Added to cart successfully", {
+        position: "top-center",
+      });
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add item to cart", {
+        position: "top-center",
+      });
+    }
+  };
+
   return (
     <div className="w-4/5">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-16 px-5">
@@ -53,6 +86,12 @@ const ResultFilterBook = (props) => {
               >
                 View more{" "}
                 <i className="fa-solid fa-angle-right text-orange-600 group-hover:ml-3 transform transition-all duration-200 ease-in-out"></i>
+              </button>
+              <button
+                onClick={() => handleAddToCart(category)}
+                className="mt-4 bg-[#e04943] text-white px-4 py-2 rounded hover:bg-[#c13f39] transition-colors"
+              >
+                Add to Cart
               </button>
             </div>
           </div>

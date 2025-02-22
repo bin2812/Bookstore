@@ -2,10 +2,14 @@
 // padding là khoảng cách từ nội dung đến viền,
 // border là viền,
 // margin là khoảng cách từ box này đến box khác
-import { Link, useLocation } from "react-router-dom";
+import { Button } from "@mui/material";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { logout } from "./auth";
+import { userCounter } from "../../stores/user.store";
 export function Header() {
+  const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.pathname);
+  const { user, resetUser } = userCounter();
   const menuLink = [
     {
       name: "Home",
@@ -27,14 +31,6 @@ export function Header() {
       name: "Cart",
       href: "/cart",
     },
-    {
-      name: "Login",
-      href: "/login",
-    },
-    {
-      name: "Register",
-      href: "/register",
-    },
   ];
   return (
     <div className="flex fixed bg-white z-50 w-full justify-between px-40 py-6 items-center shadow-md">
@@ -54,6 +50,45 @@ export function Header() {
             <Link to={item.href}>{item.name}</Link>
           </li>
         ))}
+        {user ? (
+          <>
+            <p>{user.email}</p>
+            <li className="cursor-pointer hover:text-[#e04943ff]}">
+              <Button
+                onClick={async () => {
+                  const status = await logout();
+                  if (status) {
+                    navigate("/login");
+                    resetUser();
+                  }
+                }}
+              >
+                Logout
+              </Button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li
+              className={`cursor-pointer ${
+                location.pathname === "/login"
+                  ? "text-[#e04943ff]"
+                  : "hover:text-[#e04943ff]"
+              }`}
+            >
+              <Link to="/login">Login</Link>
+            </li>
+            <li
+              className={`cursor-pointer ${
+                location.pathname === "/register"
+                  ? "text-[#e04943ff]"
+                  : "hover:text-[#e04943ff]"
+              }`}
+            >
+              <Link to="/register">Register</Link>
+            </li>
+          </>
+        )}
       </ul>
     </div>
   );

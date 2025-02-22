@@ -1,16 +1,15 @@
-import TextFieldCustom from "../../common/TextFieldCustom";
-import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IconButton, InputAdornment } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../firebase/firebase-config";
-import { doc, setDoc } from "firebase/firestore";
+import TextFieldCustom from "../../common/TextFieldCustom";
+import { register } from "./auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(true);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,7 +23,6 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: "" });
   };
-  console.log("state form value", formData);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword(!showConfirmPassword);
@@ -63,28 +61,13 @@ const Register = () => {
     if (validateForm()) {
       try {
         setIsLoading(true);
-        // Create user in Firebase Authentication
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          formData.email,
-          formData.password
-        );
-
-        // Save additional user data in Firestore
-        try {
-          await setDoc(doc(db, "users", userCredential.user.uid), {
-            email: formData.email,
-            createdAt: new Date().toISOString(),
-          });
-          console.log("User data saved to Firestore successfully");
-          navigate("/login");
-        } catch (firestoreError) {
-          console.error("Firestore error:", firestoreError);
-          setErrors({
-            ...errors,
-            submit: "Error saving user data. Please try again.",
-          });
-        }
+        const user = await register({
+          email: formData.email,
+          password: formData.password,
+        });
+        console.log("user", user);
+        navigate("/login");
+        toast.success("Registration successful");
       } catch (error) {
         console.error("Registration error:", error);
         if (error.code === "auth/email-already-in-use") {
