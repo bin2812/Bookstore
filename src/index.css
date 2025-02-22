@@ -32,8 +32,8 @@ body {
 /* cart */
 .cartTab {
   width: 400px;
-  background-color: #353432;
-  color: #eee;
+  background-color: #d55a55;
+  color: #fff;
   position: fixed;
   top: 0;
   right: -400px;
@@ -72,8 +72,7 @@ body {
   width: 100%;
 }
 .listCart .item {
-  display: grid;
-  grid-template-columns: 70px 150px 50px 1fr;
+  display: flex;
   gap: 10px;
   text-align: center;
   align-items: center;
