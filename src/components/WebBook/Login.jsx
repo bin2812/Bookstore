@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import TextFieldCustom from "../../common/TextFieldCustom";
 import { login } from "./auth";
+import { userCounter } from "../../stores/user.store";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { updateUser } = userCounter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -50,6 +52,7 @@ const Login = () => {
         });
         console.log("user login successfully", user);
         localStorage.setItem("user", JSON.stringify(user));
+        updateUser(user);
         navigate("/");
         toast.success("Login successful", {
           position: "top-center",

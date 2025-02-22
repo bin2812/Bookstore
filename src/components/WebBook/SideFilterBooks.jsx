@@ -44,12 +44,6 @@ const SideFilterBooks = (props) => {
       const convertToPrice = splitPriceRange[1]
         ? Number(splitPriceRange[1])
         : Infinity;
-      console.log(
-        "Giá bắt đầu: ",
-        convertFormPrice,
-        "Giá kết thúc",
-        convertToPrice
-      );
       const matchPrice =
         item.price < convertFormPrice || item.price > convertToPrice
           ? false
@@ -61,8 +55,6 @@ const SideFilterBooks = (props) => {
   }, [searchParams, setBookList]);
 
   const handleApplyFilter = () => {
-    console.log("Apply filter");
-    console.log(filter);
     const params = {
       ...(filter.author.length > 0 && { author: filter.author.join(",") }),
       ...(filter.price && { price: filter.price }),

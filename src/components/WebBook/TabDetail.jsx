@@ -4,7 +4,6 @@ import TabReviews from "./TabReviews";
 
 const TabDetail = ({ dataBook }) => {
   const [tab, setTab] = useState("description");
-  console.log(dataBook);
   return (
     <div className="px-[10%] mt-14 py-4 border-[1px] border-[#00000024] border-solid">
       <div className="flex items-center justify-center gap-5 mb-5">

@@ -6,6 +6,7 @@ import { Button } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "./auth";
 import { userCounter } from "../../stores/user.store";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 export function Header() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,10 +28,6 @@ export function Header() {
       name: "Contact",
       href: "/contact",
     },
-    {
-      name: "Cart",
-      href: "/cart",
-    },
   ];
   return (
     <div className="flex fixed bg-white z-50 w-full justify-between px-40 py-6 items-center shadow-md">
@@ -50,6 +47,20 @@ export function Header() {
             <Link to={item.href}>{item.name}</Link>
           </li>
         ))}
+        <li
+          className={`cursor-pointer relative ${
+            location.pathname === "/cart"
+              ? "text-[#e04943ff]"
+              : "hover:text-[#e04943ff]"
+          }`}
+        >
+          <Button onClick={() => {}}>
+            <ShoppingCartCheckoutIcon />
+            <span className="w-6 h-6 rounded-full bg-red-500 text-white text-sm absolute top-3 -right-3 flex items-center justify-center">
+              {0}
+            </span>
+          </Button>
+        </li>
         {user ? (
           <>
             <p>{user.email}</p>

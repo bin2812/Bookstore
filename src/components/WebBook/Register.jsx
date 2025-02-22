@@ -61,11 +61,10 @@ const Register = () => {
     if (validateForm()) {
       try {
         setIsLoading(true);
-        const user = await register({
+        await register({
           email: formData.email,
           password: formData.password,
         });
-        console.log("user", user);
         navigate("/login");
         toast.success("Registration successful");
       } catch (error) {

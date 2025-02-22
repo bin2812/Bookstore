@@ -14,7 +14,6 @@ const BookList = () => {
         <Swiper
           spaceBetween={100}
           slidesPerView={4}
-          onSwiper={(swiper) => console.log(swiper)}
           autoplay={{
             delay: 4000,
             disableOnInteraction: false,
